@@ -82,7 +82,7 @@
 			  <div class="page-content">
 				<div  style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
 					<form action="#">
-						  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						  <div class="mdl-textfield mdl-js-textfield">
 							<select class="mdl-textfield__input" type="text" id="privateFromSelect" title="privateFromSelect"></select>
 							<label class="mdl-textfield__label">From</label>
 						  </div>
@@ -126,6 +126,11 @@
 					  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="text-align: left;">
                             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="button" id="newTransparentAddress" onclick="getNewTransparentAddress()">New Transparent Address</button>
 					  </div>
+						  <form action="#">
+							  <div class="mdl-textfield mdl-js-textfield">
+								<input class="mdl-textfield__input" type="text" id="receivingAddressValue" title="receivingAddressValue">
+							  </div>
+						  </form>
 				      <span id="addressTransparentSpan"></span>					  
                 </div>
 				<div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
@@ -145,7 +150,22 @@
 	  <script src="./material.min.js"></script>
 	  <script>
 		  const renderer = require('./renderer.js');
-
+		  function stringToHex(s) {
+			  let hex = '';
+			  let append = '';
+			  for (let i = 0; i < s.length; i++) {
+				  let cp = s.codePointAt(i).toString(16);
+				  append = '';
+				  if (cp.length / 2 !== 1) {
+					  for (let n = 0; n < (2 - cp.length); n++) {
+						  append += '0';
+					  }
+					  cp = append + cp;
+				  }
+				  hex += cp;
+			  }
+			  return (hex);
+		  }
 		  function transparentReset() {
 			  document.getElementById("transparentSendToValue").value = "";
 			  document.getElementById("transparentAmountValue").value = "";
