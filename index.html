@@ -1,0 +1,189 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Material-Eleos</title>
+		  <link rel="stylesheet" href="./material.min.css">
+	</head>
+    <body>
+		<!-- Simple header with fixed tabs. -->
+		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header
+					mdl-layout--fixed-tabs">
+		  <header class="mdl-layout__header">
+			<div class="mdl-layout__header-row">
+			  <!-- Title -->
+			  <div><a id="currentBalanceValue" class="mdl-layout-title"></a></div>
+			  <div class="mdl-mini-footer__left-section">
+				<ul class="mdl-mini-footer__link-list">
+				  <li><a>&nbsp;<span class="coin"></span></a><li>
+				  <li><a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Transparent: <span id="transparentBalanceValue"></span> <span class="coin"></span>/ Private: <spanid="privateBalanceValue"></span> <span class="coin"></span>)</a></li>
+				  <li><a>&nbsp;<span id="connectionsField">| Connections: <span id="connectionsValue"></span></span></a></li>
+				  <li><a>&nbsp;| <span id="syncStatusLabel">Sync Status: <span id="syncStatusValue"></span>%</span></span></a><li>
+				</ul>
+			  </div>
+			</div>
+			<!-- Tabs -->
+			<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+			  <a href="#fixed-tab-1" class="mdl-layout__tab is-active">History</a>
+			  <a href="#fixed-tab-2" class="mdl-layout__tab">Memos</a>
+			  <a href="#fixed-tab-3" class="mdl-layout__tab">Send Transparent</a>
+			  <a href="#fixed-tab-4" class="mdl-layout__tab">Send Private</a>
+			  <a href="#fixed-tab-5" class="mdl-layout__tab">Addresses</a>
+			</div>
+		  </header>
+
+		  <main class="mdl-layout__content">		
+			<section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
+				  <div class="page-content">
+						<span class="alertSpan" id="alertSpan"></span>
+						<div class="page" id="networkPage"></div>
+					<div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
+						<span id="transactionTransparentSpan"></span>
+						<span id="transactionPrivateSpan"></span>
+					</div>
+				  </div>
+			</section>
+			
+			<section class="mdl-layout__tab-panel" id="fixed-tab-2">
+			  <div class="page-content" style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;"><div class="page" id="memoPage"></div></div>
+			</section>
+			
+			<section class="mdl-layout__tab-panel" id="fixed-tab-3">
+			  <div class="page-content">
+			      <div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
+					  <h6>Available Transparent Balance </h6><span class="" id="transparentAvailableValue"> </span> <span class="coin"></span><br /><br />
+					  <form action="#">
+						  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="text" id="transparentSendToValue" title="transparentSendToValue">
+							<label class="mdl-textfield__label">Sen to</label>
+						  </div>
+					  </form>
+					  <form action="#">
+						  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="transparentAmountValue" title="transparentAmountValue">
+							<label class="mdl-textfield__label">Amount</label>
+							<span class="mdl-textfield__error">Input is not a number!</span>
+						  </div>
+					  </form>
+				  </div>
+				  <div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
+					  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="text-align: left;">
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="button" id="transparentSendButton" onclick="sendTransparentTransaction()">Send</button>
+					  </div>
+				  </div>
+				  <div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
+				      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="text-align: left;">
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button" id="transparentResetButton" onclick="transparentReset()">Reset</button>
+                      </div>					  
+                  </div>
+			  </div>
+			</section>
+			
+			<section class="mdl-layout__tab-panel" id="fixed-tab-4">
+			  <div class="page-content">
+				<div  style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
+					<form action="#">
+						  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<select class="mdl-textfield__input" type="text" id="privateFromSelect" title="privateFromSelect"></select>
+							<label class="mdl-textfield__label">From</label>
+						  </div>
+					</form>
+					<form action="#">
+						  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="text" id="privateSendToValue" title="privateSendToValue">
+							<label class="mdl-textfield__label">Send To</label>
+						  </div>
+					</form>
+					<form action="#">
+						  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="privateAmountValue" title="privateAmountValue">
+							<label class="mdl-textfield__label">Amount</label>
+							<span class="mdl-textfield__error">Input is not a number!</span>
+						  </div>
+					</form>
+					<form action="#">
+						  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="text" id="privateMemoValue" title="privateMemoValue">
+							<label class="mdl-textfield__label">Encrypted Memo</label>
+						  </div>
+					</form>
+                </div>
+				<div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
+					  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="text-align: left;">
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="button" id="privateSendButton" onclick="sendPrivateTransaction()">Send</button>
+					  </div>
+				</div>
+				<div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
+				      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="text-align: left;">
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button" id="privateResetButton" onclick="privateReset()">Reset</button>
+                      </div>					  
+                </div>
+			  </div>
+			</section>
+			
+			<section class="mdl-layout__tab-panel" id="fixed-tab-5">
+			  <div class="page-content">
+				<div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
+					  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="text-align: left;">
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="button" id="newTransparentAddress" onclick="getNewTransparentAddress()">New Transparent Address</button>
+					  </div>
+				      <span id="addressTransparentSpan"></span>					  
+                </div>
+				<div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
+                    
+					  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-top: 50px; text-align: left;">
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="button" id="newPrivateAddress" onclick="getNewPrivateAddress()">New Private Address</button>
+                      </div>
+                    <span id="addressPrivateSpan"></span>
+				</div>
+			  </div>
+			</section>
+			
+		  </main>
+		</div>
+	</body>
+
+	  <script src="./material.min.js"></script>
+	  <script>
+		  const renderer = require('./renderer.js');
+
+		  function transparentReset() {
+			  document.getElementById("transparentSendToValue").value = "";
+			  document.getElementById("transparentAmountValue").value = "";
+		  }
+		  function privateReset() {
+			  document.getElementById("privateSendToValue").value = "";
+			  document.getElementById("privateAmountValue").value = "";
+			  document.getElementById("privateMemoValue").value = "";
+		  }
+		  function getNewTransparentAddress() {
+			  document.getElementById("receivingAddressValue").value = renderer.generateQuerySync('getnewaddress', []).result;
+		  }
+		  function getNewPrivateAddress() {
+			  document.getElementById("receivingAddressValue").value = renderer.generateQuerySync('z_getnewaddress', []).result;
+		  }
+		  function sendTransparentTransaction() {
+			  let sendTo = document.getElementById("transparentSendToValue").value;
+			  let amount = document.getElementById("transparentAmountValue").value;
+			  let tx = {};
+			  tx[sendTo] = Number(amount);
+			  renderer.generateQuery('sendmany', ["", tx]);
+			  document.getElementById("transparentResetButton").click();
+		  }
+		  function sendPrivateTransaction() {
+			  let from = document.getElementById("privateFromSelect").value;
+			  let address = document.getElementById("privateSendToValue").value;
+			  let amount = Number(document.getElementById("privateAmountValue").value);
+			  if (document.getElementById("privateMemoValue").value.length === 0) {
+				  renderer.generateQuery('z_sendmany', [from, [{'address': address, 'amount': amount}]]);
+			  }
+			  else {
+				  let memo = stringToHex(document.getElementById("privateMemoValue").value);
+				  renderer.generateQuery('z_sendmany', [from, [{'address': address, 'amount': amount, 'memo': memo}]]);
+			  }
+			  document.getElementById("privateResetButton").click();
+		  }
+
+		  // set default tab
+		  document.getElementById("fixed-tab-1").click();
+	  </script>
+</html>

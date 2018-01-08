@@ -1,0 +1,13 @@
+{
+    "coin": "zcl",
+    "rpcUser": "",
+    "rpcPass": "",
+    "rpcIP": "",
+    "rpcPort": "",
+    "binaryPathWin": "",
+    "binaryPathMacOS": "",
+    "binaryPathLinux": "",
+    "confPathWin": "",
+    "confPathMacOS": "",
+    "confPathLinux": ""
+}

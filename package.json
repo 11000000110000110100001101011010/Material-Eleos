@@ -1,0 +1,54 @@
+{
+  "name": "Material-Eleos",
+  "version": "0.1.0",
+  "description": "A minimal Equihash Zclassic wallet",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "package:windows": "electron-packager ./ Material-Eleos --platform win32 --arch x64 --out dist --overwrite",
+    "package-win": "electron-packager . Material-Eleos --overwrite --platform=win32 --arch=x64 --icon=resources/zcl.ico --prune=true --out=release-builds --version-string.ProductName=\"Material-Eleos\"",
+    "package-mac": "electron-packager ./ Material-Eleos --overwrite --platform=darwin --arch=x64 --prune=true --out=release-builds",
+    "create-installer-mac": "electron-installer-dmg ./release-builds/Material-Eleos-darwin-x64/Material-Eleos.app Material-Eleos --out=release-builds --overwrite",
+    "setup:windows": "electron-installer-windows --src release-builds/Material-Eleos-win32-x64/ --dest release-builds/installers/"
+  },
+  "homepage": "",
+  "repository": "https://github.com/johandjoz/Material-Eleos",
+  "keywords": [
+    "zclassic",
+    "equihash",
+    "wallet"
+  ],
+  "author": "Z community",
+  "license": "CPAL-1.0",
+  "dependencies": {
+    "binding": "^3.0.3",
+    "dat": "^13.9.2",
+    "errors": "^0.3.0",
+    "express": "^4.16.2",
+    "express-ws": "^3.0.0",
+    "ht-auth": "^0.1.0",
+    "http-auth": "^3.2.3",
+    "minimatch": "^3.0.4",
+    "node-gyp": "^3.6.2",
+    "node-pty": "^0.6.10",
+    "passport-local": "^1.0.0",
+    "request": "^2.83.0",
+    "request-progress": "^3.0.0",
+    "tableify": "^1.1.0",
+    "tar-fs": "^1.16.0",
+    "tcp-port-used": "^0.1.2",
+    "typescript": "^2.6.2",
+    "xterm": "^2.9.2"
+  },
+  "devDependencies": {
+    "electron": "^1.8.1",
+    "electron-installer-dmg": "^0.2.1",
+    "electron-installer-windows": "^0.2.0",
+    "electron-packager": "^8.1.0",
+    "electron-rebuild": "^1.5.11",
+    "electron-windows-installer": "^1.7.8",
+    "electron-winstaller": "^2.6.3",
+    "flow-bin": "^0.50.0"
+  },
+  "false": {}
+}
