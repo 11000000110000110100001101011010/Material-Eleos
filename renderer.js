@@ -130,7 +130,7 @@ function generateHistoryTable(txs, privTxs) {
 
 ipcRenderer.on("jsonQuery-reply", (event, arg) => {
     if (arg.error && arg.error.code === -28) {
-        document.getElementById("alertSpan").innerHTML = '<img src="resources/logo-dark.png" style="display: block; margin: auto; padding-top: 50px;"/> <img src="resources/load.gif" style="display: block; margin: auto; padding-top: 50px;"/></div><h2 style="text-align: center;">' + arg.error.message + '</h2>';
+        document.getElementById("alertSpan").innerHTML = '<a style="text-align: center;">' + arg.error.message + '</a>';
     }
     else {
         document.getElementById("alertSpan").innerHTML = "";
@@ -142,8 +142,9 @@ ipcRenderer.on("jsonQuery-reply", (event, arg) => {
     else if (arg.id === "getblockchaininfo" && arg.result) {
         let status = ((arg.result.blocks / arg.result.headers) * 100).toFixed(1);
         document.getElementById("syncStatusValue").innerHTML = status;
+
         if (status < 100) {
-            document.getElementById("syncStatusLabel").style.backgroundColor = "yellow";
+            document.getElementById("syncStatusLabel").style.backgroundColor = "orange";
         }
         else {
             document.getElementById("syncStatusLabel").style.backgroundColor = "";
@@ -172,7 +173,7 @@ ipcRenderer.on("jsonQuery-reply", (event, arg) => {
         }
         genHistory.transparent = true;
     }
-    else if (arg.id === "listaddressgroupings" && arg.result) {
+    else if (arg.id === "listreceivedbyaddress 0 true" && arg.result) {
         let table = [];
         let ctr = 0;
         for (let i = 0; i < arg.result.length; i++) {
@@ -309,10 +310,10 @@ ipcRenderer.on("coin-reply", (event, arg) => {
 
 ipcRenderer.on("params-pending", (event, arg) => {
     if (arg.percent < 1) {
-        document.getElementById("alertSpan").innerHTML = '<img src="resources/logo-dark.png" style="display: block; margin: auto; padding-top: 50px;"/> <img src="resources/load.gif" style="display: block; margin: auto; padding-top: 50px;"/>' +
-            '<h2 style="text-align: center;">downloading proving and verification keys</h2>' +
-            '<h4 style="text-align: center;">' + (arg.name.substr(arg.name.lastIndexOf('/') + 1)) + '</h4>' +
-            '<h4 style="text-align: center;">' + (arg.percent * 100).toFixed(2) + '%</h4>';
+        document.getElementById("alertSpan").innerHTML = '' +
+            '<a style="text-align: center;">downloading keys</a>' +
+            '<a style="text-align: center;">' + (arg.name.substr(arg.name.lastIndexOf('/') + 1)) + '</a>' +
+            '<a style="text-align: center;">' + (arg.percent * 100).toFixed(2) + '%</a>';
     }
     else if (!arg.percent || arg.percent === 1) {
         document.getElementById("alertSpan").innerHTML = "";
@@ -321,8 +322,8 @@ ipcRenderer.on("params-pending", (event, arg) => {
 
 ipcRenderer.on("params-complete", (event, arg) => {
     if (arg === false) {
-        document.getElementById("alertSpan").innerHTML = '<img src="resources/logo-dark.png" style="display: block; margin: auto; padding-top: 50px;"/> <img src="resources/load.gif" style="display: block; margin: auto; padding-top: 50px;"/>' +
-            '<h2 style="text-align: center;">initializing</h2>';
+        document.getElementById("alertSpan").innerHTML = '' +
+            '<a style="text-align: center;">initializing</a>';
     }
     else {
         document.getElementById("alertSpan").innerHTML = "";
@@ -412,3 +413,10 @@ module.exports = {
         ipcRenderer.send("save-opts", opts);
     }
 };
+
+
+
+
+
+
+

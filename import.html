@@ -1,0 +1,216 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Material-Eleos</title>
+		<link rel="stylesheet" href="./material.min.css">
+		<link rel="stylesheet" href="./styles.css">
+		<link rel="stylesheet" href="./w3.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+	</head>
+    <body>
+		<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+		
+		
+		  <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
+			<div class="mdl-layout__header-row">
+			  <span class="mdl-layout-title" id="currentBalanceValue"></span>&nbsp;<span class="coin"></span>
+			  <a>&nbsp;&nbsp;&nbsp;(Transparent: <span id="transparentAvailableValue"></span> <span class="coin"></span> / Private: <span id="privateBalanceValue"></span> <span class="coin"></span>)</a>
+			  <a>&nbsp;<span id="connectionsField">| Connections: <span id="connectionsValue"></span></span></a>
+			  <a>&nbsp;| <span id="syncStatusLabel">Sync Status: <span id="syncStatusValue"></span>%</span></span>&nbsp;<span class="alertSpan" id="alertSpan"></span></a>
+			  <div class="mdl-layout-spacer"></div>
+			</div>
+		  </header>
+		
+		  <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+			<header class="demo-drawer-header">
+			  <img src="zcl.png" class="demo-avatar">
+			  <div class="demo-avatar-dropdown">
+				<span>ZCLASSIC</span>
+				<div class="mdl-layout-spacer"></div>
+				<button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+				  <i class="material-icons" role="presentation">arrow_drop_down</i>
+				  <span class="visuallyhidden">Wallet</span>
+				</button>
+				<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
+				  <li class="mdl-menu__item">ZCLASSIC</li>
+				  <li class="mdl-menu__item">BITCOIN PRIVATE</li>
+				</ul>
+			  </div>
+			</header>
+			<nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
+			  <a class="mdl-navigation__link" href="index.html"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Home</a>
+			  <a class="mdl-navigation__link" href="history.html"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">timeline</i>History</a>
+			  <a class="mdl-navigation__link" href="memos.html"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">forum</i>Memos</a>
+			  <a class="mdl-navigation__link" href="sendt.html"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">call_made</i>Send Transparent</a>
+			  <a class="mdl-navigation__link" href="sendz.html"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">call_missed_outgoing</i>Send Private</a>
+			  <a class="mdl-navigation__link" href="addr.html"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">call_received</i>Addresses</a>
+			  <a class="mdl-navigation__link" href="import.html"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">vpn_key</i></i>Private key tools</a>
+			  <div class="mdl-layout-spacer"></div>
+			  <a class="mdl-navigation__link" href="help.html"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i><span class="visuallyhidden">Help</span></a>
+			</nav>
+		  </div>
+		  
+			
+		  <main class="mdl-layout__content">
+		  
+			<section class="mdl-layout__content" id="fixed-tab-3">
+			  <div class="page-content">
+					  <div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
+						  <h3>Import private key</h3>
+						  <h6>You need to restart the wallet after import your private key</h6>
+						  <form action="#">
+							  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input class="mdl-textfield__input" type="text" id="tprivkey" title="tprivkey">
+								<label class="mdl-textfield__label">T address private key</label>
+							  </div>
+						  </form>
+					  </div>
+					  <div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
+						  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="text-align: left;">
+								<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="button" id="btnimportT" onclick="importTprivkey()">Import T private key</button>
+						  </div>
+					  </div>
+					  <div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
+						  <form action="#">
+							  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input class="mdl-textfield__input" type="text" id="zprivkey" title="zprivkey">
+								<label class="mdl-textfield__label">Z address private key</label>
+							  </div>
+						  </form>
+					  </div>
+					  <div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
+						  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="text-align: left;">
+								<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="button" id="btnimportZ" onclick="importZprivkey()">Import Z private key</button>
+						  </div>					  
+					  </div>
+					  <div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
+						  <h3>Export private key</h3>
+						  <h6></h6>
+						  <form action="#">
+							  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input class="mdl-textfield__input" type="text" id="taddr" title="taddr">
+								<label class="mdl-textfield__label">T address</label>
+							  </div>
+						  </form>
+						  <form action="#">
+							  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input readonly class="mdl-textfield__input" type="text" id="texportedprivkey" title="texportedprivkey" value=''>
+							  </div>
+						  </form>
+					  </div>
+					  <div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
+						  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="text-align: left;">
+								<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="button" id="btnexportT" onclick="exportTprivkey()">Export T private key</button>
+						  </div>
+					  </div>
+					  <div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
+						  <form action="#">
+							  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input class="mdl-textfield__input" type="text" id="zaddr" title="zaddr">
+								<label class="mdl-textfield__label">Z address</label>
+							  </div>
+						  </form>
+						  <form action="#">
+							  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input readonly class="mdl-textfield__input" type="text" id="zexportedprivkey" title="zexportedprivkey" value=''>
+							  </div>
+						  </form>
+					  </div>
+					  <div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
+						  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="text-align: left;">
+								<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="button" id="btnexportZ" onclick="exportZprivkey()">Export Z private key</button>
+						  </div>					  
+					  </div>
+			  </div>
+			</section>
+			
+		  </main>
+		</div>
+	</body>
+	  <script src="./material.min.js"></script>  
+	  <script src="header.js"></script>  
+	  <script>
+			const os = require("os");
+			const execFile = require("child_process").execFile;
+			
+			var cmdcli;
+				if (os.platform() === "win32") {
+					cmdcli = "zcl-cli.exe";
+				}
+				else if (os.platform() === "darwin") {
+					cmdcli = "zcl-cli-mac";
+				}
+				else if (os.platform() === "linux") {
+					cmdcli = "zcl-cli-linux";
+				}
+				  
+			function importTprivkey() {
+				execFile (cmdcli, [
+					'importprivkey',
+					document.querySelector("#tprivkey").value
+				], {
+					windowsHide: false
+				}, (err, stdout, stderr) => {
+					if (err) console.error(err);
+					console.info('stdout', stdout);
+					console.warn('stderr', stderr);
+				});
+			}
+			
+			function importZprivkey() {
+				execFile (cmdcli, [
+					'z_importkey',
+					document.querySelector("#zprivkey").value
+				], {
+					windowsHide: false
+				}, (err, stdout, stderr) => {
+					if (err) console.error(err);
+					console.info('stdout', stdout);
+					console.warn('stderr', stderr);
+				});
+			}
+			
+			function exportTprivkey() {
+				execFile (cmdcli, [
+					'dumpprivkey',
+					document.querySelector("#taddr").value
+				], {
+					windowsHide: false
+				}, (err, stdout, stderr) => {
+					if (err) console.error(err);
+					console.info('stdout', stdout);
+					document.querySelector('#texportedprivkey').value = stdout;
+					console.warn('stderr', stderr);
+				},);
+			}
+			
+			function exportZprivkey() {
+				execFile (cmdcli, [
+					'z_exportkey',
+					document.querySelector("#zaddr").value
+				], {
+					windowsHide: false
+				}, (err, stdout, stderr) => {
+					if (err) console.error(err);
+					console.info('stdout', stdout);
+					document.querySelector('#zexportedprivkey').value = stdout;
+					console.warn('stderr', stderr);
+				});
+			}
+
+			function backupprivkey() {
+				execFile (cmdcli, [
+					'z_exportwallet',
+					document.querySelector("#wallettxt").value
+				], {
+					windowsHide: false
+				}, (err, stdout, stderr) => {
+					if (err) console.error(err);
+					console.info('stdout', stdout);
+					console.warn('stderr', stderr);
+				});
+			}
+	  </script>
+</html>

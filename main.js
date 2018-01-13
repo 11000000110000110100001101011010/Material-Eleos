@@ -11,6 +11,7 @@ const url = require("url");
 const os = require("os");
 const fs = require("fs");
 const spawn = require("child_process").spawn;
+const execFile = require("child_process").execFile ;
 const tcpPortUsed = require("tcp-port-used");
 const tar = require("tar-fs");
 
@@ -321,18 +322,6 @@ function confPathCB(path) {
     writeConfig(JSON.stringify(config, null, 4));
 }
 
-function showRPCOpts() {
-    let win = new BrowserWindow({width: 420, height: 480});
-    win.loadURL(url.format({
-        pathname: path.join(__dirname, "rpc.html"),
-        protocol: "file:",
-        slashes: true
-    }));
-    win.once("ready-to-show", () => {
-        win.show();
-    });
-}
-
 function createWindow() {
     if (configComplete === false) {
         checkConfig(createWindow);
@@ -536,9 +525,9 @@ function createWindow() {
     Menu.setApplicationMenu(menu);
 
     mainWindow = new BrowserWindow({
-        "minWidth": 1240,
+        "minWidth": 1350,
         "minHeight": 800,
-        "width": 1240,
+        "width": 1350,
         "height": 800,
         icon: "resources/" + config.coin.toLowerCase() + ".png"
     });
@@ -548,8 +537,8 @@ function createWindow() {
         protocol: "file:",
         slashes: true
     }));
-
-    //mainWindow.webContents.openDevTools();
+	
+    mainWindow.webContents.openDevTools();
 
     mainWindow.on("closed", function () {
         mainWindow = null;
