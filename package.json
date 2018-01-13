@@ -42,13 +42,14 @@
   },
   "devDependencies": {
     "electron": "^1.8.1",
-    "electron-installer-dmg": "^0.2.1",
+    "electron-installer-dmg": "*",
     "electron-installer-windows": "^0.2.0",
     "electron-packager": "^8.1.0",
     "electron-rebuild": "^1.5.11",
     "electron-windows-installer": "^1.7.8",
     "electron-winstaller": "^2.6.3",
-    "flow-bin": "^0.50.0"
+    "flow-bin": "^0.50.0",
+    "appdmg": "*"
   },
   "false": {}
 }
