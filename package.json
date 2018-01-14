@@ -7,7 +7,7 @@
     "start": "electron .",
     "package:windows": "electron-packager ./ Material-Eleos --platform win32 --arch x64 --out dist --overwrite",
     "package-win": "electron-packager . Material-Eleos --overwrite --platform=win32 --arch=x64 --icon=resources/zcl.ico --prune=true --out=release-builds --version-string.ProductName=\"Material-Eleos\"",
-    "package-mac": "electron-packager ./ Material-Eleos --overwrite --platform=darwin --arch=x64 --prune=true --out=release-builds",
+    "package-mac": "electron-packager ./ Material-Eleos --overwrite --platform=darwin --arch=x64 --icon=resources/zcl.icns --prune=true --out=release-builds",
     "create-installer-mac": "electron-installer-dmg ./release-builds/Material-Eleos-darwin-x64/Material-Eleos.app Material-Eleos --out=release-builds --overwrite",
     "setup:windows": "electron-installer-windows --src release-builds/Material-Eleos-win32-x64/ --dest release-builds/installers/"
   },
@@ -42,13 +42,14 @@
   },
   "devDependencies": {
     "electron": "^1.8.1",
-    "electron-installer-dmg": "^0.2.1",
+    "electron-installer-dmg": "*",
     "electron-installer-windows": "^0.2.0",
     "electron-packager": "^8.1.0",
     "electron-rebuild": "^1.5.11",
     "electron-windows-installer": "^1.7.8",
     "electron-winstaller": "^2.6.3",
-    "flow-bin": "^0.50.0"
+    "flow-bin": "^0.50.0",
+    "appdmg": "*"
   },
   "false": {}
 }
