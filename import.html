@@ -134,13 +134,17 @@
 	  <script>
 			const os = require("os");
 			const execFile = require("child_process").execFile;
+
+			//required for mac build to find the zcl-cli-mac. Starts looking in root dir ("/") if not specified.
+			var path = require('path');
+ 			var appDir = path.dirname(require.main.filename);
 			
 			var cmdcli;
 				if (os.platform() === "win32") {
 					cmdcli = "zcl-cli.exe";
 				}
 				else if (os.platform() === "darwin") {
-					cmdcli = "zcl-cli-mac";
+					cmdcli = appDir + "/zcl-cli-mac";
 				}
 				else if (os.platform() === "linux") {
 					cmdcli = "zcl-cli-linux";
