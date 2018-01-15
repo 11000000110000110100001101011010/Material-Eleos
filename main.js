@@ -139,6 +139,7 @@ function checkCoinConfig(callback) {
             "rpcuser=zclrpc",
             "rpcpassword=" + crypto.randomBytes(8).toString("hex"),
             "rpcport=8232",
+			"server=1",
 			"addnode=zec.suprnova.cc",
 			"addnode=dnsseed.zclassic.org",
 			"addnode=50.112.137.36",

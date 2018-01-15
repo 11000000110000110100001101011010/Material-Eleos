@@ -92,25 +92,23 @@
 	  <script src="./material.min.js"></script>
 	  <script src="header.js"></script>  
 	  <script>
-			const os = require("os");
-			const execFile = require("child_process").execFile;
+		const os = require("os");
+		const execFile = require("child_process").execFile;
 
-			//required for mac build to find the zcl-cli-mac. Starts looking in root dir ("/") if not specified.
-			var path = require('path');
-			var appDir = path.dirname(require.main.filename);
-			
-			var cmdcli;
-				if (os.platform() === "win32") {
-					cmdcli = "zcl-cli.exe";
-				}
-				else if (os.platform() === "darwin") {
-					cmdcli = appDir + "/zcl-cli-mac";
-				}
-				else if (os.platform() === "linux") {
-					cmdcli = "zcl-cli-linux";
-				}
-	  
-			const zclcli = {
+		//required for mac build to find the zcl-cli-mac. Starts looking in root dir ("/") if not specified.
+		var path = require('path');
+		var appDir = path.dirname(require.main.filename);
+
+		var cmdcli;
+		if (os.platform() === "win32") {
+			cmdcli = "zcl-cli.exe";
+		} else if (os.platform() === "darwin") {
+			cmdcli = appDir + "/zcl-cli-mac";
+		} else if (os.platform() === "linux") {
+			cmdcli = "zcl-cli-linux";
+		}
+
+		const zclcli = {
 			// methode z_listaddresses => retourne un objet JSON
 			z_listaddresses() {
 				return new Promise((resolve, reject) => {
@@ -163,6 +161,37 @@
 						}
 					});
 				});
+			},
+			listaddressgroupings() {
+				return new Promise((resolve, reject) => {
+					execFile(cmdcli, [
+						'listaddressgroupings'
+					], {
+						windowsHide: false
+					}, (err, stdout, stderr) => {
+						if (err) return reject(err);
+						try {
+							resolve(JSON.parse(stdout));
+						} catch (err) {
+							reject(err);
+						}
+					});
+				});
+			},
+			z_getnewaddress() {
+				return new Promise((resolve, reject) => {
+					execFile(cmdcli, [
+						'getnewaddress',
+					], {
+						windowsHide: false
+					}, (err, stdout, stderr) => {
+						if (err) return reject(err);
+						resolve(stdout);
+						console.info('stdout', stdout);
+						document.querySelector('#receivingTAddressValue').value = stdout;
+						console.warn('stderr', stderr);
+					});
+				});
 			}
 		};
 
@@ -174,14 +203,14 @@
 			let addresses = await zclcli.z_listaddresses();
 
 			let accountsZ = await Promise.all(addresses.map(address => zclcli.z_getbalance(address)))
-			.then(balances => {
-				return balances.map((amount, index) => {
-					return {
-						address: addresses[index],
-						amount
-					};
-				})
-			});
+				.then(balances => {
+					return balances.map((amount, index) => {
+						return {
+							address: addresses[index],
+							amount
+						};
+					})
+				});
 
 			// viréer le tableau précédent
 			tableWrapper = document.querySelector("#addressPrivateSpan2");
@@ -190,11 +219,9 @@
 			// si des données afficher le nouveau tableau
 			if (accountsZ.length) {
 				tableWrapper.innerHTML = require("tableify")(accountsZ);
-				tableWrapper.firstElementChild.classList.add('mdl-data-table','mdl-js-data-table','table-ctm');
+				tableWrapper.firstElementChild.classList.add('mdl-data-table', 'mdl-js-data-table', 'table-ctm');
 			}
-
-
-
+			
 			// récupérer la liste et la filtrer
 			let accountsT = (await zclcli.listreceivedbyaddress([
 				'0',
@@ -203,7 +230,19 @@
 				['account', 'confirmations', 'txids']
 				.forEach(propertyName => delete item[propertyName]);
 				return item;
-			});
+			}).filter(value => !value.amount);
+			
+			let accountsTAmount = (await zclcli.listaddressgroupings())
+			.reduce((accumulateur, value) => {
+				value.forEach(item => {
+					accumulateur.push({address: item[0], amount: item[1]});
+				});
+				return accumulateur;
+			}, [])
+			.filter(value => !!value.amount);
+
+			// fusionner
+			let newList = accountsTAmount.concat(accountsT);
 
 			// viréer le tableau précédent
 			tableWrapper = document.querySelector("#addressTransparentSpan");
@@ -211,36 +250,25 @@
 
 			// si des données afficher le nouveau tableau
 			if (accountsT.length) {
-				tableWrapper.innerHTML = require("tableify")(accountsT);
-				tableWrapper.firstElementChild.classList.add('mdl-data-table','mdl-js-data-table','table-ctm');
-			}
-		})();
-			
-			function getNewTransparentAddress() {
-				execFile (cmdcli, [
-					'getnewaddress',
-				], {
-					windowsHide: false
-				}, (err, stdout, stderr) => {
-					if (err) console.error(err);
-					console.info('stdout', stdout);
-					document.querySelector('#receivingTAddressValue').value = stdout;
-					console.warn('stderr', stderr);
-				},);
-			}
-			
-			function getNewPrivateAddress() {
-				execFile (cmdcli, [
-					'z_getnewaddress',
-				], {
-					windowsHide: false
-				}, (err, stdout, stderr) => {
-					if (err) console.error(err);
-					console.info('stdout', stdout);
-					document.querySelector('#receivingZAddressValue').value = stdout;
-					console.warn('stderr', stderr);
-				});
+				tableWrapper.innerHTML = require("tableify")(newList);
+				tableWrapper.firstElementChild.classList.add('mdl-data-table', 'mdl-js-data-table', 'table-ctm');
 			}
 
+			
+		})();
+
+		function getNewTransparentAddress() {
+			zclcli.z_getnewaddress()
+			.then(address => {
+				document.querySelector('#receivingTAddressValue').value = address;
+			});
+		}
+
+		function getNewPrivateAddress() {
+			zclcli.z_getnewaddress()
+			.then(address => {
+				document.querySelector('#receivingZAddressValue').value = address;
+			});
+		}
 	  </script>
 </html>
