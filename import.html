@@ -59,7 +59,7 @@
 			  <div class="page-content">
 					  <div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
 						  <h3>Import private key</h3>
-						  <h6>You need to restart the wallet after import your private key</h6>
+						  <h6>You need to restart the wallet after importing your private key</h6>
 						  <form action="#">
 							  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 								<input class="mdl-textfield__input" type="text" id="tprivkey" title="tprivkey">
@@ -134,13 +134,17 @@
 	  <script>
 			const os = require("os");
 			const execFile = require("child_process").execFile;
+
+			//required for mac build to find the zcl-cli-mac. Starts looking in root dir ("/") if not specified.
+			var path = require('path');
+ 			var appDir = path.dirname(require.main.filename);
 			
 			var cmdcli;
 				if (os.platform() === "win32") {
 					cmdcli = "zcl-cli.exe";
 				}
 				else if (os.platform() === "darwin") {
-					cmdcli = "zcl-cli-mac";
+					cmdcli = appDir + "/zcl-cli-mac";
 				}
 				else if (os.platform() === "linux") {
 					cmdcli = "zcl-cli-linux";
