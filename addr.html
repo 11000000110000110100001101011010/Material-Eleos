@@ -178,7 +178,7 @@
 					});
 				});
 			},
-			z_getnewaddress() {
+			t_getnewaddress() {
 				return new Promise((resolve, reject) => {
 					execFile(cmdcli, [
 						'getnewaddress',
@@ -189,6 +189,21 @@
 						resolve(stdout);
 						console.info('stdout', stdout);
 						document.querySelector('#receivingTAddressValue').value = stdout;
+						console.warn('stderr', stderr);
+					});
+				});
+			},
+			z_getnewaddress() {
+				return new Promise((resolve, reject) => {
+					execFile(cmdcli, [
+						'z_getnewaddress',
+					], {
+						windowsHide: false
+					}, (err, stdout, stderr) => {
+						if (err) return reject(err);
+						resolve(stdout);
+						console.info('stdout', stdout);
+						document.querySelector('#receivingZAddressValue').value = stdout;
 						console.warn('stderr', stderr);
 					});
 				});
@@ -258,7 +273,7 @@
 		})();
 
 		function getNewTransparentAddress() {
-			zclcli.z_getnewaddress()
+			zclcli.t_getnewaddress()
 			.then(address => {
 				document.querySelector('#receivingTAddressValue').value = address;
 			});

@@ -272,17 +272,6 @@ ipcRenderer.on("jsonQuery-reply", (event, arg) => {
         }
         genHistory.private = true;
     }
-    else if (arg.id === "listreceivedbyaddress" && arg.result) {
-        let unusedAddresses = [];
-        for (let i = 0; i < arg.result.length; i++) {
-            if (arg.result[i].amount === 0) {
-                unusedAddresses.push(arg.result[i].address);
-            }
-            if (unusedAddresses.length === 0) {
-                document.getElementById("newTransparentAddress").click();
-            }
-        }
-    }
     else if (arg.id === "sendmany") {
         if (arg.result === null) {
             window.alert("There was an error:\n\n" + arg.error.message);
