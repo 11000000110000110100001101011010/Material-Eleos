@@ -19,6 +19,7 @@
 			  <a>&nbsp;&nbsp;&nbsp;(Transparent: <span id="transparentAvailableValue"></span> <span class="coin"></span> / Private: <span id="privateBalanceValue"></span> <span class="coin"></span>)</a>
 			  <a>&nbsp;<span id="connectionsField">| Connections: <span id="connectionsValue"></span></span></a>
 			  <a>&nbsp;| <span id="syncStatusLabel">Sync Status: <span id="syncStatusValue"></span>%</span></span>&nbsp;<span class="alertSpan" id="alertSpan"></span></a>
+			  <a>&nbsp;&nbsp;</a><span id="spinner"><div id="p2" style="width: 200px" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div></span><a>&nbsp;&nbsp;</a>
 			  <div class="mdl-layout-spacer"></div>
 			</div>
 		  </header>
@@ -59,7 +60,7 @@
 			  <div class="page-content">
 					  <div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
 						  <h3>Import private key</h3>
-						  <h6>Because of a rescan after importing a new key, your balance may be unavailable for several minutes</h6>
+						  <p style="color: red">Importing new private keys requires a full rescan, which could take up to half an hour, depending on your machine.<br>WARNING ! Because of this, your wallet will be unavailable during that time. Please do not close the wallet.</p>
 						  <form action="#">
 							  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 								<input class="mdl-textfield__input" type="text" id="tprivkey" title="tprivkey">
@@ -138,7 +139,7 @@
 			//required for mac build to find the zcl-cli-mac. Starts looking in root dir ("/") if not specified.
 			var path = require('path');
  			var appDir = path.dirname(require.main.filename);
-			
+			document.querySelector('#spinner').style.opacity = "0"; 
 			var cmdcli;
 				if (os.platform() === "win32") {
 					cmdcli = "zcl-cli.exe";
@@ -151,30 +152,38 @@
 				}
 				  
 			function importTprivkey() {
+                document.querySelector('#spinner').style.opacity = "1";
+				document.body.style.pointerEvents = "none";
 				execFile (cmdcli, [
 					'importprivkey',
 					document.querySelector("#tprivkey").value
 				], {
 					windowsHide: false
 				}, (err, stdout, stderr) => {
+                    document.body.style.pointerEvents = null;
+                    document.querySelector('#spinner').style.opacity = "0";   
 					if (err) console.error(err);
 					console.info('stdout', stdout);
 					console.warn('stderr', stderr);
 				});
 			}
 			
-			function importZprivkey() {
-				execFile (cmdcli, [
-					'z_importkey',
-					document.querySelector("#zprivkey").value
-				], {
-					windowsHide: false
-				}, (err, stdout, stderr) => {
-					if (err) console.error(err);
-					console.info('stdout', stdout);
-					console.warn('stderr', stderr);
-				});
-			}
+            function importZprivkey() {
+                document.querySelector('#spinner').style.opacity = "1";
+                document.body.style.pointerEvents = "none";
+                execFile (cmdcli, [
+                    'z_importkey',
+                    document.querySelector("#zprivkey").value,
+                ], {
+                    windowsHide: false
+                }, (err, stdout, stderr) => {
+                    document.body.style.pointerEvents = null;
+                    document.querySelector('#spinner').style.opacity = "0"; 
+                    if (err) console.error(err);
+                    console.info('stdout', stdout);
+                    console.warn('stderr', stderr);
+                });
+            }
 			
 			function exportTprivkey() {
 				execFile (cmdcli, [
