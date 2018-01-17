@@ -50,5 +50,8 @@
     "electron-winstaller": "^2.6.3",
     "flow-bin": "^0.50.0"
   },
+  "optionalDependencies": {
+    "appdmg": "*"
+  },
   "false": {}
 }
