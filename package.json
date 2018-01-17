@@ -48,7 +48,9 @@
     "electron-rebuild": "^1.5.11",
     "electron-windows-installer": "^1.7.8",
     "electron-winstaller": "^2.6.3",
-    "flow-bin": "^0.50.0",
+    "flow-bin": "^0.50.0"
+  },
+  "optionalDependencies": {
     "appdmg": "*"
   },
   "false": {}
