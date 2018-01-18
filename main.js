@@ -477,7 +477,7 @@ function createWindow() {
                         console.log("Version: " + pjs.version);
                         dialog.showMessageBox(null, {
                             type: "info",
-                            title: "Material Eleos",
+                            title: "Zclassic Material Eleos",
                             message: "Version: " + pjs.version
                         });
                     }
@@ -526,9 +526,9 @@ function createWindow() {
     Menu.setApplicationMenu(menu);
 
     mainWindow = new BrowserWindow({
-        "minWidth": 1350,
+        "minWidth": 1370,
         "minHeight": 800,
-        "width": 1350,
+        "width": 1370,
         "height": 800,
         icon: "resources/" + config.coin.toLowerCase() + ".png"
     });

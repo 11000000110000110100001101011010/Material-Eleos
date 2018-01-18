@@ -82,6 +82,39 @@
                             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button" id="transparentResetButton" onclick="transparentReset()">Reset</button>
                       </div>					  
                   </div>
+				  <div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
+				  	<h3>Send Transparent "from" "to"</h3>
+					  <form action="#">
+						  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="text" id="fromtransparent" title="fromtransparent">
+							<label class="mdl-textfield__label">From</label>
+						  </div>
+					  </form>
+					  <form action="#">
+						  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="text" id="transparentSendTo" title="transparentSendTo">
+							<label class="mdl-textfield__label">Send to</label>
+						  </div>
+					  </form>
+					  <form action="#">
+						  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="fromtoAmountValue" title="fromtoAmountValue">
+							<label class="mdl-textfield__label">Amount</label>
+							<span class="mdl-textfield__error">Input is not a number!</span>
+						  </div>
+					  </form>
+					  <form action="#">
+						  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="text" id="feeSendTo" title="feeSendTo">
+							<label class="mdl-textfield__label">Optionally set a transaction fee, which by default is 0.0001</label>
+						  </div>
+					  </form>
+				  </div>
+				  <div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
+					  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="text-align: left;">
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="button" id="fromtotransparentSendButton" onclick="fromtotransparenttransaction()">Send</button>
+					  </div>
+				  </div>
 			  </div>
 			</section>
 			
@@ -103,6 +136,39 @@
 	</div>
 	  <script src="./material.min.js"></script>
 	  <script>
+	  
+			const os = require("os");
+			const execFile = require("child_process").execFile;
+			const {dialog} = require("electron");
+			//required for mac build to find the zcl-cli-mac. Starts looking in root dir ("/") if not specified.
+			var path = require('path');
+			var appDir = path.dirname(require.main.filename);
+
+			var cmdcli;
+			if (os.platform() === "win32") {
+				cmdcli = "zcl-cli.exe";
+			} else if (os.platform() === "darwin") {
+				cmdcli = appDir + "/zcl-cli-mac";
+			} else if (os.platform() === "linux") {
+				cmdcli = "zcl-cli-linux";
+			}
+		
+			function fromtotransparenttransaction() {
+				execFile (cmdcli, [
+					'z_sendmany',
+					document.querySelector("#fromtransparent").value,
+					'[{\"amount\": ' + document.querySelector("#fromtoAmountValue").value + ', \"address\": \"' + document.querySelector("#transparentSendTo").value + '\"}]',
+					//document.querySelector("#feeSendTo").value
+				], {
+					windowsHide: false
+				}, (err, stdout, stderr) => {
+					if (err) console.error(err);
+					console.info('stdout', stdout);
+					//document.querySelector('#operationid').value = stdout;
+					console.warn('stderr', stderr);
+				},);
+			}
+	  
 		  const renderer = require('./renderer.js');
 		  function stringToHex(s) {
 			  let hex = '';
