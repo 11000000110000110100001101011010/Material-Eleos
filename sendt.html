@@ -8,220 +8,206 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	</head>
-    <body>
+	<body>
 		<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-		
-		
-		  <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
-			<div class="mdl-layout__header-row">
-			  <span class="mdl-layout-title" id="currentBalanceValue"></span>&nbsp;<span class="coin"></span>
-			  <a>&nbsp;&nbsp;&nbsp;(Transparent: <span id="transparentAvailableValue"></span> <span class="coin"></span> / Private: <span id="privateBalanceValue"></span> <span class="coin"></span>)</a>
-			  <a>&nbsp;<span id="connectionsField">| Connections: <span id="connectionsValue"></span></span></a>
-			  <a>&nbsp;| <span id="syncStatusLabel">Sync Status: <span id="syncStatusValue"></span>%</span></span>&nbsp;<span class="alertSpan" id="alertSpan"></span></a>
-			  <div class="mdl-layout-spacer"></div>
-			</div>
-		  </header>
-		
-		  <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
-			<header class="demo-drawer-header">
-			  <img src="zcl.png" class="demo-avatar">
-			  <div class="demo-avatar-dropdown">
-				<span>ZCLASSIC</span>
-				<div class="mdl-layout-spacer"></div>
-				<button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-				  <i class="material-icons" role="presentation">arrow_drop_down</i>
-				  <span class="visuallyhidden">Wallet</span>
-				</button>
-				<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
-				  <li class="mdl-menu__item">ZCLASSIC</li>
-				  <li class="mdl-menu__item">BITCOIN PRIVATE</li>
-				</ul>
-			  </div>
+			<header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
+				<div class="mdl-layout__header-row">
+					<span class="mdl-layout-title" id="currentBalanceValue"></span>&nbsp;<span class="coin"></span>
+					<a>&nbsp;&nbsp;&nbsp;(Transparent: <span id="transparentAvailableValue"></span> <span class="coin"></span> / Private: <span id="privateBalanceValue"></span> <span class="coin"></span>)</a>
+					<a>&nbsp;<span id="connectionsField">| Connections: <span id="connectionsValue"></span></span></a>
+					<a>&nbsp;| <span id="syncStatusLabel">Sync Status: <span id="syncStatusValue"></span>%</span></span>&nbsp;<span class="alertSpan" id="alertSpan"></span></a>
+					<div class="mdl-layout-spacer"></div>
+				</div>
 			</header>
-			<nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
-			  <a class="mdl-navigation__link" href="index.html"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Home</a>
-			  <a class="mdl-navigation__link" href="history.html"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">timeline</i>History</a>
-			  <a class="mdl-navigation__link" href="memos.html"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">forum</i>Memos</a>
-			  <a class="mdl-navigation__link" href="sendt.html"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">call_made</i>Send Transparent</a>
-			  <a class="mdl-navigation__link" href="sendz.html"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">call_missed_outgoing</i>Send Private</a>
-			  <a class="mdl-navigation__link" href="addr.html"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">call_received</i>Addresses</a>
-			  <a class="mdl-navigation__link" href="import.html"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">vpn_key</i></i>Private key tools</a>
-			  <div class="mdl-layout-spacer"></div>
-			  <a class="mdl-navigation__link" href="help.html"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i><span class="visuallyhidden">Help</span></a>
-			</nav>
-		  </div>
-		  
-			
-		  <main class="mdl-layout__content">
-		  
-			<section class="mdl-layout__content" id="fixed-tab-3">
-			  <div class="page-content">
-			      <div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
-					  <h3>Send Transparent</h3>
-					  <form action="#">
-						  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-							<input class="mdl-textfield__input" type="text" id="transparentSendToValue" title="transparentSendToValue">
-							<label class="mdl-textfield__label">Send to</label>
-						  </div>
-					  </form>
-					  <form action="#">
-						  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-							<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="transparentAmountValue" title="transparentAmountValue">
-							<label class="mdl-textfield__label">Amount</label>
-							<span class="mdl-textfield__error">Input is not a number!</span>
-						  </div>
-					  </form>
-				  </div>
-				  <div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
-					  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="text-align: left;">
-                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="button" id="transparentSendButton" onclick="sendTransparentTransaction()">Send</button>
-					  </div>
-				  </div>
-				  <div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
-				      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="text-align: left;">
-                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button" id="transparentResetButton" onclick="transparentReset()">Reset</button>
-                      </div>					  
-                  </div>
-				  <div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
-				  	<h3>Send Transparent "from" "to"</h3>
-					  <form action="#">
-						  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-							<input class="mdl-textfield__input" type="text" id="fromtransparent" title="fromtransparent">
-							<label class="mdl-textfield__label">From</label>
-						  </div>
-					  </form>
-					  <form action="#">
-						  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-							<input class="mdl-textfield__input" type="text" id="transparentSendTo" title="transparentSendTo">
-							<label class="mdl-textfield__label">Send to</label>
-						  </div>
-					  </form>
-					  <form action="#">
-						  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-							<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="fromtoAmountValue" title="fromtoAmountValue">
-							<label class="mdl-textfield__label">Amount</label>
-							<span class="mdl-textfield__error">Input is not a number!</span>
-						  </div>
-					  </form>
-					  <form action="#">
-						  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-							<input class="mdl-textfield__input" type="text" id="feeSendTo" title="feeSendTo">
-							<label class="mdl-textfield__label">Optionally set a transaction fee, which by default is 0.0001</label>
-						  </div>
-					  </form>
-				  </div>
-				  <div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
-					  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="text-align: left;">
-                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="button" id="fromtotransparentSendButton" onclick="fromtotransparenttransaction()">Send</button>
-					  </div>
-				  </div>
-			  </div>
-			</section>
-			
-		  </main>
+			<div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+				<header class="demo-drawer-header">
+					<img src="zcl.png" class="demo-avatar">
+					<div class="demo-avatar-dropdown">
+						<span>ZCLASSIC</span>
+						<div class="mdl-layout-spacer"></div>
+						<button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+						<i class="material-icons" role="presentation">arrow_drop_down</i>
+						<span class="visuallyhidden">Wallet</span>
+						</button>
+						<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
+							<li class="mdl-menu__item">ZCLASSIC</li>
+							<li class="mdl-menu__item">BITCOIN PRIVATE</li>
+						</ul>
+					</div>
+				</header>
+				<nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
+					<a class="mdl-navigation__link" href="index.html"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Home</a>
+					<a class="mdl-navigation__link" href="history.html"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">timeline</i>History</a>
+					<a class="mdl-navigation__link" href="memos.html"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">forum</i>Memos</a>
+					<a class="mdl-navigation__link" href="sendt.html"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">call_made</i>Send Transparent</a>
+					<a class="mdl-navigation__link" href="sendz.html"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">call_missed_outgoing</i>Send Private</a>
+					<a class="mdl-navigation__link" href="addr.html"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">call_received</i>Addresses</a>
+					<a class="mdl-navigation__link" href="import.html"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">vpn_key</i></i>Private key tools</a>
+					<div class="mdl-layout-spacer"></div>
+					<a class="mdl-navigation__link" href="help.html"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i><span class="visuallyhidden">Help</span></a>
+				</nav>
+			</div>
+			<main class="mdl-layout__content">
+				<section class="mdl-layout__content" id="fixed-tab-3">
+					<div class="page-content">
+						<div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
+							<h3>Send Transparent</h3>
+							<form action="#">
+								<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+									<input class="mdl-textfield__input" type="text" id="transparentSendToValue" title="transparentSendToValue">
+									<label class="mdl-textfield__label">Send to</label>
+								</div>
+							</form>
+							<form action="#">
+								<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+									<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="transparentAmountValue" title="transparentAmountValue">
+									<label class="mdl-textfield__label">Amount</label>
+									<span class="mdl-textfield__error">Input is not a number!</span>
+								</div>
+							</form>
+						</div>
+						<div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
+							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="text-align: left;">
+								<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="button" id="transparentSendButton" onclick="sendTransparentTransaction()">Send</button>
+							</div>
+						</div>
+						<div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
+							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="text-align: left;">
+								<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button" id="transparentResetButton" onclick="transparentReset()">Reset</button>
+							</div>
+						</div>
+						<div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
+							<h3>Send Transparent "from" "to"</h3>
+							<form action="#">
+								<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+									<input class="mdl-textfield__input" type="text" id="fromtransparent" title="fromtransparent">
+									<label class="mdl-textfield__label">From</label>
+								</div>
+							</form>
+							<form action="#">
+								<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+									<input class="mdl-textfield__input" type="text" id="transparentSendTo" title="transparentSendTo">
+									<label class="mdl-textfield__label">Send to</label>
+								</div>
+							</form>
+							<form action="#">
+								<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+									<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="fromtoAmountValue" title="fromtoAmountValue">
+									<label class="mdl-textfield__label">Amount</label>
+									<span class="mdl-textfield__error">Input is not a number!</span>
+								</div>
+							</form>
+						</div>
+						<div style="padding-left: 50px; padding-top: 50px; padding-right: 50px; border-bottom-width: 50px; text-align: center;">
+							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="text-align: left;">
+								<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="button" id="fromtotransparentSendButton" onclick="fromtotransparenttransaction()">Send</button>
+							</div>
+						</div>
+					</div>
+				</section>
+			</main>
 		</div>
 	</body>
 	<div hidden>
-			<select class="mdl-textfield__input" type="text" id="privateFromSelect" title="privateFromSelect"></select>
-			<span class="alertSpan" id="alertSpan"></span>
-			<span class="" id="transparentAvailableValue"> </span>
-			<span id="addressTransparentSpan"></span>
-			<div class="page" id="memoPage"></div>
-			<span id="addressPrivateSpan"></span>
-			<span id="transactionTransparentSpan"></span>
-			<span id="transactionPrivateSpan"></span>
-			<span id="addressPrivateSpan2"></span>
-			<span id="addressTransparentSpan"></span>
-			<span id="transparentBalanceValue"></span>
+		<select class="mdl-textfield__input" type="text" id="privateFromSelect" title="privateFromSelect"></select>
+		<span class="alertSpan" id="alertSpan"></span>
+		<span class="" id="transparentAvailableValue"> </span>
+		<span id="addressTransparentSpan"></span>
+		<div class="page" id="memoPage"></div>
+		<span id="addressPrivateSpan"></span>
+		<span id="transactionTransparentSpan"></span>
+		<span id="transactionPrivateSpan"></span>
+		<span id="addressPrivateSpan2"></span>
+		<span id="addressTransparentSpan"></span>
+		<span id="transparentBalanceValue"></span>
 	</div>
-	  <script src="./material.min.js"></script>
-	  <script>
-	  
-			const os = require("os");
-			const execFile = require("child_process").execFile;
-			const {dialog} = require("electron");
-			//required for mac build to find the zcl-cli-mac. Starts looking in root dir ("/") if not specified.
-			var path = require('path');
-			var appDir = path.dirname(require.main.filename);
-
-			var cmdcli;
-			if (os.platform() === "win32") {
-				cmdcli = "zcl-cli.exe";
-			} else if (os.platform() === "darwin") {
-				cmdcli = appDir + "/zcl-cli-mac";
-			} else if (os.platform() === "linux") {
-				cmdcli = "zcl-cli-linux";
-			}
+	<script src="./material.min.js"></script>
+	<script>
+		const os = require("os");
+		const execFile = require("child_process").execFile;
+		const {dialog} = require("electron");
+		//required for mac build to find the zcl-cli-mac. Starts looking in root dir ("/") if not specified.
+		var path = require('path');
+		var appDir = path.dirname(require.main.filename);
 		
-			function fromtotransparenttransaction() {
-				execFile (cmdcli, [
-					'z_sendmany',
-					document.querySelector("#fromtransparent").value,
-					'[{\"amount\": ' + document.querySelector("#fromtoAmountValue").value + ', \"address\": \"' + document.querySelector("#transparentSendTo").value + '\"}]',
-					//document.querySelector("#feeSendTo").value
-				], {
-					windowsHide: false
-				}, (err, stdout, stderr) => {
-					if (err) console.error(err);
-					console.info('stdout', stdout);
-					//document.querySelector('#operationid').value = stdout;
-					console.warn('stderr', stderr);
-				},);
-			}
-	  
-		  const renderer = require('./renderer.js');
-		  function stringToHex(s) {
-			  let hex = '';
-			  let append = '';
-			  for (let i = 0; i < s.length; i++) {
-				  let cp = s.codePointAt(i).toString(16);
-				  append = '';
-				  if (cp.length / 2 !== 1) {
-					  for (let n = 0; n < (2 - cp.length); n++) {
-						  append += '0';
-					  }
-					  cp = append + cp;
+		var cmdcli;
+		if (os.platform() === "win32") {
+			cmdcli = "zcl-cli.exe";
+		} else if (os.platform() === "darwin") {
+			cmdcli = appDir + "/zcl-cli-mac";
+		} else if (os.platform() === "linux") {
+			cmdcli = "zcl-cli-linux";
+		}
+		
+		function fromtotransparenttransaction() {
+			execFile (cmdcli, [
+				'z_sendmany',
+				document.querySelector("#fromtransparent").value,
+				'[{\"amount\": ' + document.querySelector("#fromtoAmountValue").value + ', \"address\": \"' + document.querySelector("#transparentSendTo").value + '\"}]',
+				//document.querySelector("#feeSendTo").value
+			], {
+				windowsHide: false
+			}, (err, stdout, stderr) => {
+				if (err) console.error(err);
+				console.info('stdout', stdout);
+				//document.querySelector('#operationid').value = stdout;
+				console.warn('stderr', stderr);
+			},);
+		}
+		
+		 const renderer = require('./renderer.js');
+		 function stringToHex(s) {
+		  let hex = '';
+		  let append = '';
+		  for (let i = 0; i < s.length; i++) {
+			  let cp = s.codePointAt(i).toString(16);
+			  append = '';
+			  if (cp.length / 2 !== 1) {
+				  for (let n = 0; n < (2 - cp.length); n++) {
+					  append += '0';
 				  }
-				  hex += cp;
+				  cp = append + cp;
 			  }
-			  return (hex);
+			  hex += cp;
 		  }
-		  function transparentReset() {
-			  document.getElementById("transparentSendToValue").value = "";
-			  document.getElementById("transparentAmountValue").value = "";
+		  return (hex);
+		 }
+		 function transparentReset() {
+		  document.getElementById("transparentSendToValue").value = "";
+		  document.getElementById("transparentAmountValue").value = "";
+		 }
+		 function privateReset() {
+		  document.getElementById("privateSendToValue").value = "";
+		  document.getElementById("privateAmountValue").value = "";
+		  document.getElementById("privateMemoValue").value = "";
+		 }
+		 function getNewTransparentAddress() {
+		  document.getElementById("receivingAddressValue").value = renderer.generateQuerySync('getnewaddress', []).result;
+		 }
+		 function getNewPrivateAddress() {
+		  document.getElementById("receivingAddressValue").value = renderer.generateQuerySync('z_getnewaddress', []).result;
+		 }
+		 function sendTransparentTransaction() {
+		  let sendTo = document.getElementById("transparentSendToValue").value;
+		  let amount = document.getElementById("transparentAmountValue").value;
+		  let tx = {};
+		  tx[sendTo] = Number(amount);
+		  renderer.generateQuery('sendmany', ["", tx]);
+		  document.getElementById("transparentResetButton").click();
+		 }
+		 function sendPrivateTransaction() {
+		  let from = document.getElementById("privateFromSelect").value;
+		  let address = document.getElementById("privateSendToValue").value;
+		  let amount = Number(document.getElementById("privateAmountValue").value);
+		  if (document.getElementById("privateMemoValue").value.length === 0) {
+			  renderer.generateQuery('z_sendmany', [from, [{'address': address, 'amount': amount}]]);
 		  }
-		  function privateReset() {
-			  document.getElementById("privateSendToValue").value = "";
-			  document.getElementById("privateAmountValue").value = "";
-			  document.getElementById("privateMemoValue").value = "";
+		  else {
+			  let memo = stringToHex(document.getElementById("privateMemoValue").value);
+			  renderer.generateQuery('z_sendmany', [from, [{'address': address, 'amount': amount, 'memo': memo}]]);
 		  }
-		  function getNewTransparentAddress() {
-			  document.getElementById("receivingAddressValue").value = renderer.generateQuerySync('getnewaddress', []).result;
-		  }
-		  function getNewPrivateAddress() {
-			  document.getElementById("receivingAddressValue").value = renderer.generateQuerySync('z_getnewaddress', []).result;
-		  }
-		  function sendTransparentTransaction() {
-			  let sendTo = document.getElementById("transparentSendToValue").value;
-			  let amount = document.getElementById("transparentAmountValue").value;
-			  let tx = {};
-			  tx[sendTo] = Number(amount);
-			  renderer.generateQuery('sendmany', ["", tx]);
-			  document.getElementById("transparentResetButton").click();
-		  }
-		  function sendPrivateTransaction() {
-			  let from = document.getElementById("privateFromSelect").value;
-			  let address = document.getElementById("privateSendToValue").value;
-			  let amount = Number(document.getElementById("privateAmountValue").value);
-			  if (document.getElementById("privateMemoValue").value.length === 0) {
-				  renderer.generateQuery('z_sendmany', [from, [{'address': address, 'amount': amount}]]);
-			  }
-			  else {
-				  let memo = stringToHex(document.getElementById("privateMemoValue").value);
-				  renderer.generateQuery('z_sendmany', [from, [{'address': address, 'amount': amount, 'memo': memo}]]);
-			  }
-			  document.getElementById("privateResetButton").click();
-		  }
-
-	  </script>
+		  document.getElementById("privateResetButton").click();
+		 }
+		
+	</script>
 </html>
